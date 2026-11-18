@@ -924,7 +924,10 @@ CMDF( do_emote )
             vch->print_fmt( "&[ignore]You attempt to ignore {}, but are unable to do so.\r\n", !vch->can_see( ch, false ) ? "Someone" : ch->name );
       }
 
-      if( speaking != -1 && ( !ch->isnpc(  ) || ch->speaking ) )
+      /*
+       * An emote describes an action and is not speech, so NPC emotes are never translated.
+       */
+      if( speaking != -1 && !ch->isnpc(  ) )
       {
          int speakswell = umin( knows_language( vch, ch->speaking, ch ), knows_language( ch, ch->speaking, vch ) );
 
