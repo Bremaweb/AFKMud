@@ -882,7 +882,10 @@ int xp_compute( char_data * gch, char_data * victim )
     * Level based experience gain cap.  Cannot get more experience for
     * a kill than the amount for your current experience level   -Thoric
     */
-   return urange( 0, xp, exp_level( gchlev ) );
+   /*
+    * exp_level( 1 ) is 0, which capped every kill at level 1 to zero experience. Never cap below the cost of level 2.
+    */
+   return urange( 0, xp, umax( exp_level( gchlev ), exp_level( 2 ) ) );
 }
 
 /* Figures up a mob's exp value based on some obscure D&D formula.
