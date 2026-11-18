@@ -330,21 +330,21 @@ void fread_deity( deity_data * deity, std::ifstream & stream, int file_ver )
          std::string temp3 = fread_word( stream );
          int value;
 
-         value = get_risflag( temp );
-         if( value < 0 || value >= MAX_RIS_FLAG )
-            bug( "{}: Invalid RISA flag for {}: {}", __func__, key, temp );
+         value = get_aflag( temp );
+         if( value < 0 || value >= MAX_AFFECTED_BY )
+            bug( "{}: Invalid affect flag for {}: {}", __func__, key, temp );
          else
             deity->affected[0] = value;
 
-         value = get_risflag( temp2 );
-         if( value < 0 || value >= MAX_RIS_FLAG )
-            bug( "{}: Invalid RISA flag for {}: {}", __func__, key, temp2 );
+         value = get_aflag( temp2 );
+         if( value < 0 || value >= MAX_AFFECTED_BY )
+            bug( "{}: Invalid affect flag for {}: {}", __func__, key, temp2 );
          else
             deity->affected[1] = value;
 
-         value = get_risflag( temp3 );
-         if( value < 0 || value >= MAX_RIS_FLAG )
-            bug( "{}: Invalid RISA flag for {}: {}", __func__, key, temp3 );
+         value = get_aflag( temp3 );
+         if( value < 0 || value >= MAX_AFFECTED_BY )
+            bug( "{}: Invalid affect flag for {}: {}", __func__, key, temp3 );
          else
             deity->affected[2] = value;
       }
