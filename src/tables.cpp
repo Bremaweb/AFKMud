@@ -165,7 +165,19 @@ void fread_cnv( std::ifstream & stream, lang_data * lng, bool pre )
          break;
 
       lcnv_data *cnv = new lcnv_data;
-      cnv->old = fread_word( stream );
+      /*
+       * fread_letter has already swallowed an opening quote, so a quoted source phrase was read with its trailing quote
+       * attached and never matched. Read the quoted phrase here.
+       */
+      if( letter == '\'' || letter == '"' )
+      {
+         char c;
+
+         while( stream.get( c ) && c != letter )
+            cnv->old.push_back( c );
+      }
+      else
+         cnv->old = std::string( 1, letter ) + fread_word( stream );
       cnv->lnew = fread_word( stream );
       fread_to_eol( stream );
       if( pre )
