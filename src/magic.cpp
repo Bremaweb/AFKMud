@@ -296,13 +296,13 @@ void say_spell( char_data* ch, int sn )
    }
 
    const bool is_bard = ( ch->Class == CLASS_BARD );
-   std::string_view msg_masked = is_bard ? "$n plays a song." : std::format( "$n utters the words, '{}'.", spell_words );
-   std::string_view msg_clear = is_bard ? std::format( "$n plays the song, '{}'.", skill->name ) : std::format( "$n utters the words, '{}'.", skill->name );
+   std::string msg_masked = is_bard ? std::string( "$n plays a song." ) : std::format( "$n utters the words, '{}'.", spell_words );
+   std::string msg_clear = is_bard ? std::format( "$n plays the song, '{}'.", skill->name ) : std::format( "$n utters the words, '{}'.", skill->name );
 
    for( const auto* rch : ch->in_room->people )
    {
       if( rch != ch && is_same_char_map( ch, rch ) )
-         act( AT_MAGIC, (ch->Class == rch->Class) ? msg_clear.data() : msg_masked.data(), ch, nullptr, rch, TO_VICT );
+         act( AT_MAGIC, (ch->Class == rch->Class) ? msg_clear.c_str() : msg_masked.c_str(), ch, nullptr, rch, TO_VICT );
    }
 }
 
